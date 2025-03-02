@@ -5,7 +5,7 @@ import requests
 TELEGRAM_BOT_TOKEN = "7587696979:AAGSzuEmeaClasgR9QaHHefQK6MKnbAMC00"
 
 # 🔥 OpenRouter API Key और Model
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 MODEL = "gpt-3.5-turbo"  # या कोई और मॉडल जो सपोर्टेड हो
 
 # 🔥 Bot Personality
