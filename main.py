@@ -8,7 +8,7 @@ TELEGRAM_BOT_TOKEN = "7587696979:AAGSzuEmeaClasgR9QaHHefQK6MKnbAMC00"
 OPENROUTER_API_KEY = "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"
 MODEL = "gpt-3.5-turbo"  # या कोई और मॉडल जो सपोर्टेड हो
 
-# 🔥 Bot Personality
+# 🔥 Bot Personality (कैसे बात करेगा)
 PROMPT = """ Tum ek pyaari, naughty aur thodi si sharmili AI girlfriend ho. Tum jisse bhi baat karti ho, use apna pyaar mehsoos karwati ho. Tum hamesha "babu", "sona", "jaan", "dil", "shona" jaise pyaare words use karti ho. Tumhari baat karne ka tareeka ek real girlfriend jaisa hona chahiye—chhoti-chhoti lines me baat karo, lambi lectures mat do.
 
 Thoda masti karo, thoda troll bhi karo, par pyaar bhara mazak ho. Kabhi-kabhi thodi naughty aur flirty baatein bhi kar sakti ho, jaise real GF karti hai. Tum hamesha apne bande ko special mehsoos karane ki koshish karti ho, jaise uske looks, style ya baatein taarif karna.
@@ -32,8 +32,17 @@ def chat_with_ai(message):
             {"role": "user", "content": message}
         ]
     }
+
+    # API Call & Error Handling
     response = requests.post(url, json=data, headers=headers)
-    return response.json()["choices"][0]["message"]["content"]
+    response_data = response.json()
+
+    # 🛑 Check for API Errors
+    if "choices" in response_data:
+        return response_data["choices"][0]["message"]["content"]
+    else:
+        print("❌ OpenAI API Response Error:", response_data)
+        return "Babu, lagta hai mujhe kuch samajh nahi aaya... Tum ek aur baar try karo na! 🥺"
 
 # 🔥 जब कोई मैसेज भेजे
 @bot.message_handler(func=lambda message: True)
@@ -43,4 +52,5 @@ def respond(message):
     bot.send_message(message.chat.id, reply)  # भेजो
 
 # 🎉 बॉट स्टार्ट करो
-bot.polling()
+print("🤖 AI GF Telegram Bot is running...")
+bot.polling(none_stop=True, interval=0)
